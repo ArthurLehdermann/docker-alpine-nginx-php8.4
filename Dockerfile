@@ -88,12 +88,9 @@ RUN docker-php-ext-configure gd --enable-gd --with-freetype --with-jpeg --with-w
 # Install generic extensions via PECL (Redis)
 RUN pecl install redis && docker-php-ext-enable redis
 
-# Install Imagick (Using GitHub version for PHP 8 compatibility if needed, or PECL if stable)
-# For PHP 8.3/8.4, PECL version might be stable enough or use the git build.
-# Keeping the git build method from original user request for safety on bleeding edge versions.
-RUN mkdir -p /usr/src/php/ext/imagick && \
-    curl -fsSL https://github.com/Imagick/imagick/archive/06116aa24b76edaf6b1693198f79e6c295eda8a9.tar.gz | tar xvz -C "/usr/src/php/ext/imagick" --strip 1 && \
-    docker-php-ext-install imagick
+# Install Imagick
+# Using PECL for better compatibility/stability
+RUN pecl install imagick && docker-php-ext-enable imagick
 
 # Cleanup
 RUN apk del .build-deps && \
