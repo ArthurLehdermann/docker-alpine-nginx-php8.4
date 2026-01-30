@@ -88,6 +88,9 @@ RUN docker-php-ext-configure gd --enable-gd --with-freetype --with-jpeg --with-w
 # Install generic extensions via PECL (Redis)
 RUN pecl install redis && docker-php-ext-enable redis
 
+# Install PCOV for code coverage
+RUN pecl install pcov && docker-php-ext-enable pcov
+
 # Install Imagick
 # Using PECL for better compatibility/stability
 RUN pecl install imagick && docker-php-ext-enable imagick
